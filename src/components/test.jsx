@@ -1,6 +1,11 @@
+import { useState } from "react";
+
 export default function Test() {
 
     //hook 1
+
+    useState()
+    
 
     let count=0;
 
