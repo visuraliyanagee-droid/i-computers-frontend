@@ -16,10 +16,8 @@ return (
   <div className="w-full h-screen bg-primary">
 
     <Routes path="/">
-     <Route path="/home" element={<HomePage/>}/>
-     <Route path="/login" element={<LoginPage/>}/>
-     <Route path="/register" element={<RegisterPage/>}/>
-     <Route path="/admin" element={<AdminPage/>}/>
+    
+     <Route path="/admin/*" element={<AdminPage/>}/>
 
    </Routes>
 
@@ -31,3 +29,9 @@ return (
 }
 
 export default App;
+
+/*
+ <Route path="/home" element={<HomePage/>}/>
+     <Route path="/login" element={<LoginPage/>}/>
+     <Route path="/register" element={<RegisterPage/>}/>
+     */
