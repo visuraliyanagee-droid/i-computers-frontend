@@ -25,7 +25,7 @@ return (
      <Route path="/admin/*" element={<AdminPage/>}/>
      <Route path="/login" element={<LoginPage/>}/>
      <Route path="/register" element={<RegisterPage/>}/>
-      <Route path="/test" element={<Test/>}/>
+     <Route path="/test" element={<Test/>}/>
 
    </Routes>
 
