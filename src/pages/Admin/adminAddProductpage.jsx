@@ -1,8 +1,6 @@
 import { AiFillProduct } from "react-icons/ai";
-
 import { useState } from "react";
 import toast from "react-hot-toast";
-import LoginPage from "../loginPage";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
