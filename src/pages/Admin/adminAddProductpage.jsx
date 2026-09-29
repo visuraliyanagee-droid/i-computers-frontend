@@ -4,9 +4,10 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import LoginPage from "../loginPage";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function AdminAddProductpage(){
-  const[productId,setProductID]=useState("");
+  const[productID,setProductID]=useState("");
   const[name,setName]=useState("");
   const[price,setPrice]=useState("");
   const[altNames,setAltNames]=useState("");
@@ -27,9 +28,48 @@ export default function AdminAddProductpage(){
       navigate("/login");
       return;
    }
-   if(productId==""||name==""||description==""||category==""||brand==""||model==""){
+   if(productID==""||name==""||description==""||category==""||brand==""||model==""){
       toast.error("please fill in all required fields.")
       return;
+   }
+
+   try{
+
+
+    const altNamesInArray = altNames.split(",")
+    const imagesInArray = images.split(",")
+
+    await axios.post(import.meta.env.VITE_BACKEND_URL + "/products/",{
+      productID : productID,
+      name : name,
+      altNames : altNamesInArray,
+      description:description,
+      price:price,
+      labelledPrice:labelledPrice,
+      images:imagesInArray,
+      category:category,
+      brand:brand,
+      model:model,
+      stock:stock,
+      isAvailable:isAvailable,
+
+    },{
+      headers:{
+        Authorization: "Bearer " + token
+      }
+    })
+    toast.success("Product added Sucessfully");
+    navigate("/admin/products")
+
+   }catch(err){
+    toast.error("Error adding product, Please try again.");
+    console.log("Error adding Product:");
+    console.log(err.data);
+
+  //console.log("Full error:", err);
+  console.log("Backend message:", err.response?.data);
+  console.log("Status code:", err.response?.status);
+
    }
 
 
@@ -49,7 +89,7 @@ export default function AdminAddProductpage(){
       </div>
         <div className={boxHalf}>
          <label className={labelCls}>Product ID</label>
-          <input type="text" value={productId} onChange={(e)=>setProductID(e.target.value)} className={inputCls}/>
+          <input type="text" value={productID} onChange={(e)=>setProductID(e.target.value)} className={inputCls}/>
           <p className="text-xs text-gray-500 text-right mt-1">Provide a unique product ID</p>
         </div>
 
@@ -127,7 +167,7 @@ export default function AdminAddProductpage(){
           </select>
         </div>
 
-        <button className="w-full h-12 text-white bg-secondary rounded-xl hover:text-white hover:bg-secondary/50">Add Product</button>
+        <button onClick={addProduct} className="w-full h-12 text-white bg-secondary rounded-xl hover:text-white hover:bg-secondary/50">Add Product</button>
 
     </div>
     </div>
