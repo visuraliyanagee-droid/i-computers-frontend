@@ -17,7 +17,7 @@ return (
         <Toaster position="top-right" />
 
 
-  <div className="w-full h-screen bg-primary">
+  <div className="w-full h-screen bg-primary ">
 
     <Routes path="/">
 

@@ -3,15 +3,18 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { BiPlus } from "react-icons/bi";
 import { Link } from "react-router-dom";
+import Loader from "../../components/loader";
 
 export default function AdminProductPage(){
 
     const [products,setProducts]=useState([])
     //console.log("URL:", import.meta.env.VITE_BACKEND_URL);
-    let loading = true
-    let error = "no error"
+    const[loaded,setLoaded]=useState(false);
 
+    
    useEffect(()=>{
+
+    if(!loaded){
     const token = localStorage.getItem("token");
     //console.log("Token:", token);
 
@@ -21,11 +24,13 @@ export default function AdminProductPage(){
         }
     }).then((response)=>{
         setProducts(response.data);
+        setLoaded(true);
     })
    .catch((err)=>{
         console.error(err)
     })
-},[loading , error])
+}
+},[loaded])
 
     return(
         <div className="w-full min-h-full bg-primary/[0.03] p-6 lg:p-10">
@@ -49,7 +54,9 @@ export default function AdminProductPage(){
             <div className="max-w-7xl mx-auto bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-primary/5 overflow-hidden">
 
                 <div className="overflow-x-auto">
-                    <table className="w-full text-sm text-left">
+
+{loaded  ? 
+                        <table className="w-full text-sm text-left">
                         <thead>
                             <tr className="bg-primary text-white/90 text-[11px] uppercase tracking-[0.15em]">
                                 <th className="px-6 py-5 font-semibold rounded-tl-3xl">Product</th>
@@ -80,7 +87,6 @@ export default function AdminProductPage(){
                                                     <span className="font-semibold text-primary max-w-[200px] truncate group-hover:text-accent transition-colors">{item.name}</span>
                                                 </div>
                                             </td>
-
                                             <td className="px-6 py-4">
                                                 <span className="font-mono text-xs text-secondary bg-primary/5 px-2.5 py-1.5 rounded-lg border border-primary/5">{item.productID}</span>
                                             </td>
@@ -117,7 +123,6 @@ export default function AdminProductPage(){
                                                 <button onClick={
                                                     ()=>{
                                                         const token = localStorage.getItem("token");
-                                                    
                                                     axios.delete(import.meta.env.VITE_BACKEND_URL + "/products/" + item.productID,{
                                                         headers: {
                                                             Authorization: "Bearer " + token
@@ -125,6 +130,7 @@ export default function AdminProductPage(){
                                                     }).then(
                                                         ()=>{
                                                             toast.success("product deleted successfully")
+                                                            setLoaded(false);
                                                         }
                                                     )
                                                 }
@@ -136,9 +142,13 @@ export default function AdminProductPage(){
                             )
                         }
                         </tbody>
-                    </table>
+                    </table> :<Loader/>}
+
                 </div>
             </div>
+
+                
+            
 
             {/* Floating Action */}
             <Link to="/admin/products/add-product" className="fixed bottom-8 right-8 w-16 h-16 flex justify-center items-center rounded-2xl bg-gradient-to-br from-accent to-logopink text-white shadow-xl shadow-accent/30 hover:shadow-2xl hover:shadow-logopink/30 hover:scale-105 active:scale-95 transition-all text-3xl">
