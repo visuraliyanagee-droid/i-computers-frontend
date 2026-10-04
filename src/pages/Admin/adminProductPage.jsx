@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import { BiPlus } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import Loader from "../../components/loader";
+import ProductDeleteButton from "../../components/productDeleteButton";
+
 
 export default function AdminProductPage(){
 
@@ -120,21 +121,8 @@ export default function AdminProductPage(){
                                                 }
                                             </td>
                                             <td className="px-6 py-4 text-right">
-                                                <button onClick={
-                                                    ()=>{
-                                                        const token = localStorage.getItem("token");
-                                                    axios.delete(import.meta.env.VITE_BACKEND_URL + "/products/" + item.productID,{
-                                                        headers: {
-                                                            Authorization: "Bearer " + token
-                                                        }
-                                                    }).then(
-                                                        ()=>{
-                                                            toast.success("product deleted successfully")
-                                                            setLoaded(false);
-                                                        }
-                                                    )
-                                                }
-                                             } className="w-25 bg-red-500 flex justify-center item-center text-white rounded-2xl p-2 cursor-pointer hover:bg-red-700 ">Delete</button>
+
+                                             <ProductDeleteButton productID={item.productID}/>
                                             </td>
                                         </tr>
                                     )
