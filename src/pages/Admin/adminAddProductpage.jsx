@@ -62,17 +62,9 @@ export default function AdminAddProductpage(){
    }catch(err){
     toast.error("Error adding product, Please try again.");
     console.log("Error adding Product:");
-    console.log(err.data);
-
-  //console.log("Full error:", err);
-  console.log("Backend message:", err.response?.data);
-  console.log("Status code:", err.response?.status);
-
-   }
-
-
+    console.log(err);
   }
-
+  }
   const inputCls = "w-full h-12 rounded-xl border-2 px-4 text-base outline-none focus:border-secondary";
   const labelCls = "text-lg font-medium mb-1 block";
   const boxHalf = "w-full md:w-[calc(50%-12px)] bg-white p-4 rounded-xl";

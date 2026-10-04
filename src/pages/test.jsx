@@ -13,7 +13,7 @@ export default function TestPage(){
                 </div>
                  <div className="w-25 h-25 bg-orange-700">
 
-                </div>
+                
                  <div className="w-25 h-25 bg-pink-700">
 
                 </div>
@@ -22,6 +22,7 @@ export default function TestPage(){
 
             
 
+        </div>
         </div>
 
         <div className="w-125 h-125 bg-yellow-700 pb-2">
